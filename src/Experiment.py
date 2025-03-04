@@ -1,5 +1,5 @@
 from typing import List, Tuple, Optional
-from src.SignalDetection import SignalDetection
+from SignalDetection import SignalDetection
 
 # obtained from cogs106 class GitHub 
 
