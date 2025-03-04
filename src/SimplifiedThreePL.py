@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.optimize import minimize
 
+# class was constructed with assistance of chatGPT
+
 class SimplifiedThreePL:
     def __init__(self, experiment):
         """Initialize the Simplified Three-Parameter Logistic model."""
