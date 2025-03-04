@@ -2,7 +2,6 @@ import scipy.stats as stats
 
 # obtained from cogs106 class GitHub 
 
-
 class SignalDetection:
 
     def __init__(self, hits, misses, falseAlarms, correctRejections):
