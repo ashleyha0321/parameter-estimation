@@ -5,7 +5,6 @@ from scipy.optimize import minimize
 
 class SimplifiedThreePL:
     def __init__(self, experiment):
-        """Initialize the Simplified Three-Parameter Logistic model."""
         self.experiment = experiment
         self._base_rate = None
         self._logit_base_rate = None
@@ -13,7 +12,6 @@ class SimplifiedThreePL:
         self._is_fitted = False
     
     def summary(self):
-        """Return a summary of the experiment."""
         n_total = self.experiment.n_trials()
         n_correct = self.experiment.n_correct()
         n_incorrect = self.experiment.n_incorrect()
@@ -27,14 +25,13 @@ class SimplifiedThreePL:
         }
     
     def predict(self, parameters):
-        """Predict the probability of a correct response given the parameters."""
         discrimination, base_rate = parameters
-        difficulties = [sdt.d_prime() for sdt in self.experiment.conditions]  # Use d_prime as difficulty
+        difficulties = [sdt.d_prime() for sdt in self.experiment.conditions]  
         probabilities = []
         
         for difficulty in difficulties:
-            logit = base_rate + discrimination * difficulty  # Logit function
-            prob = 1 / (1 + np.exp(-logit))  # Sigmoid function for probability
+            logit = base_rate + discrimination * difficulty  
+            prob = 1 / (1 + np.exp(-logit))  
             probabilities.append(prob)
         
         return probabilities
@@ -44,18 +41,17 @@ class SimplifiedThreePL:
         probabilities = self.predict(parameters)
         responses = [sdt.n_correct_responses() / sdt.n_total_responses() for sdt in self.experiment.conditions]  # Proportion of correct responses
         
-        # Calculate negative log likelihood
         nll = -np.sum(responses * np.log(probabilities) + (1 - responses) * np.log(1 - probabilities))
         return nll
     
     def fit(self):
         """Fit the model using maximum likelihood estimation."""
-        initial_guess = [0.0, 0.5]  # Starting guess for parameters (discrimination, base_rate)
+        initial_guess = [0.0, 0.5]  
         result = minimize(self.negative_log_likelihood, initial_guess, method='L-BFGS-B', bounds=[(-5, 5), (0, 1)])
         
         if result.success:
             self._discrimination, self._base_rate = result.x
-            self._logit_base_rate = np.log(self._base_rate / (1 - self._base_rate))  # Convert to logit
+            self._logit_base_rate = np.log(self._base_rate / (1 - self._base_rate))  
             self._is_fitted = True
         else:
             raise ValueError("Model fitting failed")
