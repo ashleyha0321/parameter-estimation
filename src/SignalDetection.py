@@ -15,13 +15,13 @@ class SignalDetection:
     def _validate_inputs(self):
         # Check that inputs are integers
         if not isinstance(self.hits, int):
-            raise TypeError("Hits must be integer.")
+            raise TypeError("Hits must be an integer.")
         if not isinstance(self.misses, int):
-            raise TypeError("Misses must be integer.")
+            raise TypeError("Misses must be an integer.")
         if not isinstance(self.falseAlarms, int):
-            raise TypeError("False alarms must be integer.")
+            raise TypeError("False alarms must be an integer.")
         if not isinstance(self.correctRejections, int):
-            raise TypeError("Correct rejections must be integer.")
+            raise TypeError("Correct rejections must be an integer.")
             
         # Check for non-negative values
         if self.hits < 0:
@@ -35,9 +35,9 @@ class SignalDetection:
 
         # Check trial counts
         if self.n_signal_trials() == 0:
-            raise ValueError("You must have at least one signal trial.")
+            raise ValueError("Must have at least one signal trial.")
         if self.n_noise_trials() == 0:
-            raise ValueError("You must have at least one noise trial.")
+            raise ValueError("Must have at least one noise trial.")
 
     def hit_rate(self):
         return self.hits / self.n_signal_trials()
